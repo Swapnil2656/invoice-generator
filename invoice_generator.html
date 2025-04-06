@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Generator</title>
+    <link rel="stylesheet" href="invoice_generator.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body class="light-mode">
+    <div class="container">
+        <header>
+            <h1>Invoice Generator</h1>
+            <div class="mode-toggle">
+                <label class="switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="slider round"></span>
+                </label>
+                <span id="mode-text">Dark Mode</span>
+            </div>
+        </header>
+
+        <div class="invoice-controls">
+            <div class="saved-invoices">
+                <select id="saved-invoice-list">
+                    <option value="">Select Saved Invoice</option>
+                </select>
+                <button id="load-invoice">Load</button>
+                <button id="save-invoice">Save Invoice</button>
+                <button id="new-invoice">New Invoice</button>
+            </div>
+            <div class="export-controls">
+                <button id="export-pdf"><i class="fas fa-file-pdf"></i> Export as PDF</button>
+            </div>
+        </div>
+
+        <div class="invoice-container" id="invoice">
+            <div class="invoice-header">
+                <div class="logo-container">
+                    <div id="logo-preview">
+                        <i class="fas fa-building default-logo"></i>
+                    </div>
+                    <input type="file" id="logo-upload" accept="image/*">
+                    <label for="logo-upload" class="logo-upload-btn">Upload Logo</label>
+                </div>
+                <div class="invoice-info">
+                    <div class="form-group">
+                        <label for="invoice-number">Invoice Number:</label>
+                        <input type="text" id="invoice-number" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="invoice-date">Date:</label>
+                        <input type="date" id="invoice-date">
+                    </div>
+                </div>
+            </div>
+
+            <div class="business-details">
+                <div class="form-group">
+                    <label for="business-name">Business Name:</label>
+                    <input type="text" id="business-name" placeholder="Your Business Name">
+                </div>
+                <div class="form-group">
+                    <label for="business-address">Address:</label>
+                    <textarea id="business-address" placeholder="Your Business Address"></textarea>
+                </div>
+            </div>
+
+            <div class="client-details">
+                <h2>Bill To:</h2>
+                <div class="form-group">
+                    <label for="client-name">Client Name:</label>
+                    <input type="text" id="client-name" placeholder="Client Name">
+                </div>
+                <div class="form-group">
+                    <label for="client-address">Client Address:</label>
+                    <textarea id="client-address" placeholder="Client Address"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="client-email">Client Email:</label>
+                    <input type="email" id="client-email" placeholder="client@example.com">
+                </div>
+            </div>
+
+            <div class="currency-selector">
+                <label for="currency">Currency:</label>
+                <select id="currency">
+                    <option value="₹">₹ (INR)</option>
+                    <option value="$">$ (USD)</option>
+                    <option value="€">€ (EUR)</option>
+                    <option value="£">£ (GBP)</option>
+                </select>
+            </div>
+
+            <div class="invoice-items">
+                <table id="invoice-items-table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Rate</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="invoice-items-body">
+                        <!-- Items will be added here dynamically -->
+                    </tbody>
+                </table>
+                <button id="add-item">Add Item</button>
+            </div>
+
+            <div class="invoice-summary">
+                <div class="summary-item">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">0.00</span>
+                </div>
+                <div class="summary-item">
+                    <label for="tax-rate">Tax Rate (%):</label>
+                    <input type="number" id="tax-rate" min="0" max="100" value="0">
+                </div>
+                <div class="summary-item">
+                    <span>Tax Amount:</span>
+                    <span id="tax-amount">0.00</span>
+                </div>
+                <div class="summary-item total">
+                    <span>Total Amount:</span>
+                    <span id="total-amount">0.00</span>
+                </div>
+            </div>
+
+            <div class="invoice-notes">
+                <label for="notes">Notes:</label>
+                <textarea id="notes" placeholder="Additional notes or payment instructions..."></textarea>
+            </div>
+        </div>
+    </div>
+    <script src="invoice_generator.js"></script>
+</body>
+</html>
